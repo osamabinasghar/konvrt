@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KONVRT — Performance Marketing That Pays For Itself</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #080808;
+  --white: #f4f2ee;
+  --lime: #c8f000;
+  --orange: #ff4d00;
+  --gray: #1a1a1a;
+  --gray2: #2a2a2a;
+  --muted: #666;
+  --border: #222;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CUSTOM CURSOR */
+.cursor {
+  width: 12px; height: 12px;
+  background: var(--lime);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s, width 0.2s, height 0.2s;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  width: 40px; height: 40px;
+  border: 1px solid rgba(200,240,0,0.4);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: all 0.15s ease;
+}
+body:hover .cursor { transform: translate(-50%, -50%) scale(1); }
+a:hover ~ .cursor, button:hover ~ .cursor { transform: translate(-50%, -50%) scale(3); }
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 60px;
+  background: rgba(8,8,8,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  letter-spacing: 4px;
+  color: var(--white);
+  text-decoration: none;
+}
+.logo span { color: var(--lime); }
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--lime); }
+
+.nav-cta {
+  background: var(--lime);
+  color: var(--black);
+  padding: 12px 28px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-cta:hover { background: var(--white); }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 60px 80px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse 60% 50% at 80% 50%, rgba(200,240,0,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 20% 80%, rgba(255,77,0,0.04) 0%, transparent 70%);
+}
+
+/* Animated grid */
+.grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(200,240,0,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,240,0,0.04) 1px, transparent 1px);
+  background-size: 80px 80px;
+  animation: gridMove 20s linear infinite;
+}
+@keyframes gridMove {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(80px); }
+}
+
+.hero-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 32px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.hero-tag::before { content:''; width:40px; height:1px; background:var(--lime); }
+
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(80px, 13vw, 220px);
+  line-height: 0.88;
+  letter-spacing: -2px;
+  position: relative;
+  margin-bottom: 48px;
+}
+
+.hero h1 .outline {
+  -webkit-text-stroke: 2px var(--white);
+  color: transparent;
+}
+.hero h1 .lime { color: var(--lime); }
+
+.hero-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  position: relative;
+}
+
+.hero-desc {
+  max-width: 480px;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: #aaa;
+}
+.hero-desc strong { color: var(--white); font-weight: 500; }
+
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 24px;
+  flex-shrink: 0;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 40px;
+}
+.hstat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 56px;
+  line-height: 1;
+  color: var(--lime);
+}
+.hstat-label {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 4px;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--lime);
+  color: var(--black);
+  padding: 18px 40px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.25s;
+  border: none;
+  cursor: pointer;
+}
+.btn-primary:hover { background: var(--white); gap: 20px; }
+.btn-primary .arrow { font-size: 20px; transition: transform 0.2s; }
+.btn-primary:hover .arrow { transform: translateX(4px); }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: transparent;
+  color: var(--white);
+  padding: 18px 40px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  transition: all 0.25s;
+  cursor: pointer;
+}
+.btn-ghost:hover { border-color: var(--white); }
+
+/* MARQUEE */
+.marquee-wrap {
+  background: var(--lime);
+  padding: 16px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee-inner {
+  display: inline-block;
+  animation: marquee 18s linear infinite;
+}
+.marquee-inner span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--black);
+  padding: 0 40px;
+}
+.marquee-inner .dot { color: var(--orange); }
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* MARKETS STRIP */
+.markets-strip {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+}
+.market-item {
+  flex: 1;
+  padding: 32px 40px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: background 0.2s;
+}
+.market-item:last-child { border-right: none; }
+.market-item:hover { background: var(--gray); }
+.market-flag { font-size: 28px; }
+.market-info {}
+.market-name { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:700; letter-spacing:1px; }
+.market-sub { font-size:12px; color:var(--muted); margin-top:2px; }
+
+/* ABOUT / WHAT WE DO */
+.section {
+  padding: 120px 60px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.section-eyebrow::before { content:''; width:32px; height:1px; background:var(--lime); }
+
+.section h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 6vw, 90px);
+  line-height: 0.95;
+  letter-spacing: 1px;
+  margin-bottom: 32px;
+}
+
+/* ABOUT SPLIT */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.about-text p {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: #aaa;
+  margin-bottom: 20px;
+}
+.about-text p strong { color: var(--white); font-weight: 500; }
+
+.about-right {}
+.big-number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 160px;
+  line-height: 1;
+  color: var(--gray2);
+  letter-spacing: -4px;
+  margin-bottom: -20px;
+}
+.big-number-label {
+  font-size: 14px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+/* SERVICES */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  margin-top: 60px;
+  border: 1px solid var(--border);
+}
+
+.service-card {
+  background: var(--black);
+  padding: 48px 40px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s;
+  cursor: default;
+}
+.service-card:hover { background: var(--gray); }
+.service-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--lime);
+  transform: scaleX(0);
+  transition: transform 0.3s;
+  transform-origin: left;
+}
+.service-card:hover::after { transform: scaleX(1); }
+
+.service-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 64px;
+  color: var(--border);
+  line-height: 1;
+  margin-bottom: 20px;
+  transition: color 0.3s;
+}
+.service-card:hover .service-num { color: var(--gray2); }
+
+.service-icon { font-size: 32px; margin-bottom: 16px; }
+.service-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+.service-desc {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.service-tag {
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--lime);
+  border: 1px solid var(--lime);
+  padding: 4px 10px;
+}
+
+/* PROCESS */
+.process-list {
+  margin-top: 60px;
+}
+.process-item {
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+  padding: 40px 0;
+  border-bottom: 1px solid var(--border);
+  transition: padding-left 0.3s;
+}
+.process-item:hover { padding-left: 16px; }
+.process-item:last-child { border-bottom: none; }
+
+.process-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 80px;
+  color: var(--border);
+  line-height: 1;
+}
+.process-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.process-title em { color: var(--lime); font-style: normal; }
+.process-desc {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* RESULTS */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-top: 60px;
+}
+.result-card {
+  background: var(--gray);
+  padding: 48px 32px;
+  text-align: center;
+}
+.result-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 72px;
+  color: var(--lime);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.result-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.result-desc { font-size: 14px; color: #777; line-height: 1.5; font-weight: 300; }
+
+/* TESTIMONIALS */
+.testi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 60px;
+}
+
+.testi-card {
+  background: var(--gray);
+  border: 1px solid var(--border);
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+}
+.testi-card::before {
+  content: '"';
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 200px;
+  color: rgba(200,240,0,0.06);
+  position: absolute;
+  top: -20px;
+  left: 20px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.testi-quote {
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: #ccc;
+  margin-bottom: 28px;
+  position: relative;
+}
+.testi-quote strong { color: var(--lime); font-weight: 500; }
+
+.testi-author {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.testi-avatar {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: var(--gray2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  color: var(--lime);
+  flex-shrink: 0;
+}
+.testi-name { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:700; }
+.testi-role { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+
+.testi-result {
+  position: absolute;
+  top: 24px; right: 24px;
+  background: var(--lime);
+  color: var(--black);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  padding: 6px 12px;
+}
+
+/* PLATFORMS */
+.platforms-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 60px;
+}
+
+.platform-card {
+  background: var(--gray);
+  border: 1px solid var(--border);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: border-color 0.2s;
+}
+.platform-card:hover { border-color: var(--lime); }
+
+.platform-logo {
+  font-size: 36px;
+}
+.platform-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.platform-tagline {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+  font-weight: 300;
+}
+.platform-services {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.platform-service-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  background: var(--gray2);
+  color: #888;
+}
+
+/* CTA SECTION */
+.cta-section {
+  background: var(--lime);
+  padding: 120px 60px;
+  position: relative;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: 'LET\'S GO';
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 280px;
+  color: rgba(0,0,0,0.07);
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: -8px;
+}
+
+.cta-section h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 8vw, 120px);
+  color: var(--black);
+  line-height: 0.9;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.cta-section p {
+  font-size: 20px;
+  color: rgba(0,0,0,0.6);
+  max-width: 560px;
+  line-height: 1.6;
+  font-weight: 300;
+  margin-bottom: 48px;
+  position: relative;
+}
+
+.btn-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--black);
+  color: var(--lime);
+  padding: 20px 48px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.25s;
+  position: relative;
+  cursor: pointer;
+  border: none;
+}
+.btn-dark:hover { background: #111; gap: 20px; }
+
+/* CONTACT FORM */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  margin-top: 60px;
+}
+
+.contact-info h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+.contact-info p { font-size: 15px; color: var(--muted); line-height: 1.7; font-weight: 300; margin-bottom: 32px; }
+
+.contact-detail {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 15px;
+}
+.contact-detail:last-child { border-bottom: none; }
+.contact-detail-icon { font-size: 20px; width: 32px; }
+.contact-detail-text { color: var(--muted); }
+.contact-detail-val { color: var(--white); font-weight: 500; }
+
+.form-group { margin-bottom: 24px; }
+.form-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  background: var(--gray);
+  border: 1px solid var(--border);
+  color: var(--white);
+  padding: 16px 20px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--lime);
+}
+.form-select { appearance: none; cursor: pointer; }
+.form-textarea { height: 120px; resize: none; }
+
+/* FOOTER */
+footer {
+  background: var(--gray);
+  border-top: 1px solid var(--border);
+  padding: 60px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 48px;
+}
+.footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 48px;
+  letter-spacing: 4px;
+  margin-bottom: 16px;
+}
+.footer-logo span { color: var(--lime); }
+.footer-tagline { font-size: 14px; color: var(--muted); font-weight: 300; line-height: 1.7; max-width: 280px; }
+.footer-col-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 10px; }
+.footer-links a {
+  color: #555;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 300;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--lime); }
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity:0; transform: translateY(40px); }
+  to { opacity:1; transform: translateY(0); }
+}
+.anim { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.anim.in { opacity: 1; transform: translateY(0); }
+.anim-d1 { transition-delay: 0.1s; }
+.anim-d2 { transition-delay: 0.2s; }
+.anim-d3 { transition-delay: 0.3s; }
+.anim-d4 { transition-delay: 0.4s; }
+
+@media (max-width: 900px) {
+  nav { padding: 20px 24px; }
+  .nav-links { display: none; }
+  .hero { padding: 0 24px 60px; }
+  .hero h1 { font-size: 80px; }
+  .hero-bottom { flex-direction: column; align-items: flex-start; }
+  .section { padding: 80px 24px; }
+  .about-grid, .contact-grid, .testi-grid { grid-template-columns: 1fr; }
+  .services-grid, .platforms-grid { grid-template-columns: 1fr; }
+  .results-grid { grid-template-columns: 1fr 1fr; }
+  .markets-strip { flex-wrap: wrap; }
+  .market-item { flex: 0 0 50%; }
+  .process-item { grid-template-columns: 60px 1fr; }
+  .process-desc { grid-column: 2; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .cta-section { padding: 80px 24px; }
+  footer { padding: 40px 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">KON<span>V</span>RT</a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#results">Results</a></li>
+    <li><a href="#markets">Markets</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get Audit →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="grid-bg"></div>
+  <div class="hero-tag">Performance Marketing Agency</div>
+  <h1>
+    WE DON'T<br>
+    RUN <span class="lime">ADS.</span><br>
+    WE RUN <span class="outline">RESULTS.</span>
+  </h1>
+  <div class="hero-bottom">
+    <div class="hero-desc">
+      <strong>KONVRT</strong> is a bold-first, data-obsessed performance marketing agency built for brands in UAE, USA, UK & Canada who are done guessing and ready to scale with <strong>Meta, Google & TikTok ads</strong> that actually convert.
+    </div>
+    <div class="hero-right">
+      <div class="hero-stats">
+        <div>
+          <div class="hstat-num">8×</div>
+          <div class="hstat-label">Avg ROAS Delivered</div>
+        </div>
+        <div>
+          <div class="hstat-num">$2M+</div>
+          <div class="hstat-label">Ad Spend Managed</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap">
+        <a href="#contact" class="btn-primary">Start Scaling <span class="arrow">→</span></a>
+        <a href="#results" class="btn-ghost">See Results</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span>Lead Generation</span><span class="dot">◆</span>
+    <span>Ecommerce Sales</span><span class="dot">◆</span>
+    <span>Google Ads</span><span class="dot">◆</span>
+    <span>Meta Ads</span><span class="dot">◆</span>
+    <span>TikTok Ads</span><span class="dot">◆</span>
+    <span>Full Funnel Strategy</span><span class="dot">◆</span>
+    <span>UAE · USA · UK · Canada</span><span class="dot">◆</span>
+    <span>Lead Generation</span><span class="dot">◆</span>
+    <span>Ecommerce Sales</span><span class="dot">◆</span>
+    <span>Google Ads</span><span class="dot">◆</span>
+    <span>Meta Ads</span><span class="dot">◆</span>
+    <span>TikTok Ads</span><span class="dot">◆</span>
+    <span>Full Funnel Strategy</span><span class="dot">◆</span>
+    <span>UAE · USA · UK · Canada</span><span class="dot">◆</span>
+  </div>
+</div>
+
+<!-- MARKETS -->
+<div class="markets-strip" id="markets">
+  <div class="market-item">
+    <div class="market-flag">🇦🇪</div>
+    <div class="market-info">
+      <div class="market-name">UAE</div>
+      <div class="market-sub">Real Estate · Finance · Clinics</div>
+    </div>
+  </div>
+  <div class="market-item">
+    <div class="market-flag">🇺🇸</div>
+    <div class="market-info">
+      <div class="market-name">USA</div>
+      <div class="market-sub">Ecommerce · SaaS · Services</div>
+    </div>
+  </div>
+  <div class="market-item">
+    <div class="market-flag">🇬🇧</div>
+    <div class="market-info">
+      <div class="market-name">UK</div>
+      <div class="market-sub">Finance · Ecommerce · B2B</div>
+    </div>
+  </div>
+  <div class="market-item">
+    <div class="market-flag">🇨🇦</div>
+    <div class="market-info">
+      <div class="market-name">Canada</div>
+      <div class="market-sub">Home Services · Finance · Ecom</div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="section">
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="section-eyebrow anim">Who We Are</div>
+      <h2 class="anim anim-d1">BUILT BY MARKETERS,<br>DRIVEN BY DATA</h2>
+      <p class="anim anim-d2">Most agencies talk about results. <strong>We engineer them.</strong> KONVRT was built by performance marketers who've managed millions in ad spend across 4 major markets — and still got their hands dirty in the ad accounts daily.</p>
+      <p class="anim anim-d3">We don't do retainers for the sake of retainers. Every campaign we run has a clear <strong>cost per acquisition target, a ROAS floor, and a scaling plan</strong>. No fluff. No vanity metrics. Just revenue.</p>
+      <a href="#contact" class="btn-primary anim anim-d4" style="margin-top:16px">Get Free Audit <span class="arrow">→</span></a>
+    </div>
+    <div class="about-right anim anim-d2">
+      <div class="big-number">100%</div>
+      <div class="big-number-label">Paid on performance</div>
+      <div style="margin-top:32px;display:grid;gap:16px">
+        <div style="background:var(--gray);border:1px solid var(--border);padding:20px 24px;display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:14px;color:var(--muted)">Avg. Client ROAS</span>
+          <span style="font-family:'Bebas Neue';font-size:32px;color:var(--lime)">8.4×</span>
+        </div>
+        <div style="background:var(--gray);border:1px solid var(--border);padding:20px 24px;display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:14px;color:var(--muted)">Lead Cost Reduction</span>
+          <span style="font-family:'Bebas Neue';font-size:32px;color:var(--lime)">-62%</span>
+        </div>
+        <div style="background:var(--gray);border:1px solid var(--border);padding:20px 24px;display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:14px;color:var(--muted)">Markets We Operate In</span>
+          <span style="font-family:'Bebas Neue';font-size:32px;color:var(--lime)">4</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="services" style="padding-top:0">
+  <div class="section-eyebrow anim">What We Do</div>
+  <h2 class="anim anim-d1">OUR SERVICES</h2>
+  <div class="services-grid">
+    <div class="service-card anim">
+      <div class="service-num">01</div>
+      <div class="service-icon">🎯</div>
+      <div class="service-name">Lead Generation Ads</div>
+      <p class="service-desc">We build end-to-end lead funnels that attract, qualify, and convert — with instant CRM sync, automated follow-up, and CPL tracking tied directly to revenue. Built for real estate, clinics, finance, and B2B services across UAE, USA, UK & Canada.</p>
+      <span class="service-tag">Meta · Google · TikTok</span>
+    </div>
+    <div class="service-card anim anim-d1">
+      <div class="service-num">02</div>
+      <div class="service-icon">🛒</div>
+      <div class="service-name">Ecommerce Sales Ads</div>
+      <p class="service-desc">From dynamic product ads and Shopping campaigns to TikTok Shop and full-funnel retargeting — we build ecom engines that hit target ROAS and scale profitably. We track MER, not just platform ROAS.</p>
+      <span class="service-tag">Shopify · WooCommerce · Meta · Google</span>
+    </div>
+    <div class="service-card anim anim-d2">
+      <div class="service-num">03</div>
+      <div class="service-icon">🎵</div>
+      <div class="service-name">TikTok Ads</div>
+      <p class="service-desc">TikTok is the fastest-growing paid channel for brands targeting 18–40. We create native-style creative that doesn't look like an ad, set up TikTok Shop, and use the algorithm's power to find your buyers at scale.</p>
+      <span class="service-tag">TikTok Shop · Spark Ads · Smart+</span>
+    </div>
+    <div class="service-card anim anim-d1">
+      <div class="service-num">04</div>
+      <div class="service-icon">🔍</div>
+      <div class="service-name">Google Ads</div>
+      <p class="service-desc">Search, Shopping, PMax, and YouTube — we capture high-intent buyers at every touchpoint. We obsess over Quality Score, negative keywords, and Smart Bidding setup so your budget never gets wasted on irrelevant clicks.</p>
+      <span class="service-tag">Search · PMax · Shopping · YouTube</span>
+    </div>
+    <div class="service-card anim anim-d2">
+      <div class="service-num">05</div>
+      <div class="service-icon">🔁</div>
+      <div class="service-name">Full Funnel Strategy</div>
+      <p class="service-desc">We architect your entire acquisition and retention funnel — from cold audience creative to retargeting sequences, post-purchase upsells, and email/WhatsApp nurture flows. Paid ads that feed a system, not a one-off spike.</p>
+      <span class="service-tag">TOF · MOF · BOF · Retention</span>
+    </div>
+    <div class="service-card anim anim-d3">
+      <div class="service-num">06</div>
+      <div class="service-icon">📊</div>
+      <div class="service-name">Tracking & Analytics Setup</div>
+      <p class="service-desc">Before we spend a dollar of your budget, we fix your tracking. Meta CAPI, Google Enhanced Conversions, GTM, GA4, UTMs, and Looker Studio dashboards — because you can't optimise what you can't measure.</p>
+      <span class="service-tag">GTM · CAPI · GA4 · Looker Studio</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section" id="process">
+  <div class="section-eyebrow anim">How It Works</div>
+  <h2 class="anim anim-d1">OUR PROCESS</h2>
+  <div class="process-list">
+    <div class="process-item anim">
+      <div class="process-num">01</div>
+      <div class="process-title">FREE <em>AUDIT</em></div>
+      <p class="process-desc">We dissect your current ad accounts, tracking setup, creative, and funnel. In 48 hours, we give you a brutally honest breakdown of what's costing you money and exactly how to fix it — free, no commitment.</p>
+    </div>
+    <div class="process-item anim">
+      <div class="process-num">02</div>
+      <div class="process-title">STRATEGY <em>SPRINT</em></div>
+      <p class="process-desc">Week one is all strategy. ICP definition, market research, funnel architecture, platform selection, creative brief, and KPI targets. We don't launch until we have a clear path to your CPA and ROAS goals.</p>
+    </div>
+    <div class="process-item anim">
+      <div class="process-num">03</div>
+      <div class="process-title">BUILD &amp; <em>LAUNCH</em></div>
+      <p class="process-desc">We build everything: tracking stack, campaign structure, ad creatives, landing pages, and automation. Launch is methodical — test campaigns first, validate, then scale. No spray-and-pray.</p>
+    </div>
+    <div class="process-item anim">
+      <div class="process-num">04</div>
+      <div class="process-title">OPTIMISE &amp; <em>SCALE</em></div>
+      <p class="process-desc">Weekly optimisation calls, a live Looker Studio dashboard you can access anytime, and a relentless focus on hitting and beating targets. When results are consistent, we scale fast — with your approval at every step.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORMS -->
+<section class="section" style="padding-top:0">
+  <div class="section-eyebrow anim">Platforms</div>
+  <h2 class="anim anim-d1">WHERE WE WIN</h2>
+  <div class="platforms-grid">
+    <div class="platform-card anim">
+      <div class="platform-logo">📘</div>
+      <div class="platform-name">Meta Ads</div>
+      <p class="platform-tagline">Facebook & Instagram. The most powerful targeting ecosystem on earth for leads and ecommerce. We leverage CAPI, Advantage+, DPA, and native lead forms.</p>
+      <div class="platform-services">
+        <span class="platform-service-tag">Lead Forms</span>
+        <span class="platform-service-tag">DPA Retargeting</span>
+        <span class="platform-service-tag">Advantage+</span>
+        <span class="platform-service-tag">CAPI</span>
+      </div>
+    </div>
+    <div class="platform-card anim anim-d1">
+      <div class="platform-logo">🟢</div>
+      <div class="platform-name">Google Ads</div>
+      <p class="platform-tagline">Capture buyers the moment they're ready to purchase. Search, Shopping, PMax, and YouTube — we cover the full Google ecosystem with precision.</p>
+      <div class="platform-services">
+        <span class="platform-service-tag">Search</span>
+        <span class="platform-service-tag">PMax</span>
+        <span class="platform-service-tag">Shopping</span>
+        <span class="platform-service-tag">YouTube</span>
+      </div>
+    </div>
+    <div class="platform-card anim anim-d2">
+      <div class="platform-logo">🎵</div>
+      <div class="platform-name">TikTok Ads</div>
+      <p class="platform-tagline">The fastest-growing ad platform. Native creative that converts, TikTok Shop integration, and Smart+ campaigns that let the algorithm do the heavy lifting.</p>
+      <div class="platform-services">
+        <span class="platform-service-tag">TikTok Shop</span>
+        <span class="platform-service-tag">Spark Ads</span>
+        <span class="platform-service-tag">Smart+</span>
+        <span class="platform-service-tag">UGC</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="section" id="results" style="background:var(--gray);padding-top:80px;padding-bottom:80px">
+  <div class="content" style="max-width:none">
+    <div class="section-eyebrow anim">Proof</div>
+    <h2 class="anim anim-d1">THE NUMBERS<br>DON'T LIE</h2>
+    <div class="results-grid">
+      <div class="result-card anim">
+        <div class="result-num">8.4×</div>
+        <div class="result-label">Average ROAS</div>
+        <p class="result-desc">Across ecommerce clients in USA & UK markets over 90 days</p>
+      </div>
+      <div class="result-card anim anim-d1">
+        <div class="result-num">-62%</div>
+        <div class="result-label">CPL Reduction</div>
+        <p class="result-desc">Average lead cost reduction within 60 days of taking over campaigns</p>
+      </div>
+      <div class="result-card anim anim-d2">
+        <div class="result-num">$2M+</div>
+        <div class="result-label">Ad Spend Managed</div>
+        <p class="result-desc">Across Meta, Google & TikTok in 4 markets profitably</p>
+      </div>
+      <div class="result-card anim anim-d3">
+        <div class="result-num">48H</div>
+        <div class="result-label">Audit Turnaround</div>
+        <p class="result-desc">We deliver your free account audit within 48 hours of sign-up</p>
+      </div>
+    </div>
+
+    <!-- TESTIMONIALS -->
+    <div class="testi-grid" style="margin-top:48px">
+      <div class="testi-card anim">
+        <div class="testi-result">ROAS 9.2×</div>
+        <p class="testi-quote">We'd been running Meta ads for 2 years with mediocre results. KONVRT overhauled our tracking, rebuilt our creative strategy, and within 8 weeks we were at <strong>9.2× ROAS on a $40K/month budget.</strong> Game changer.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">SA</div>
+          <div>
+            <div class="testi-name">Sarah A.</div>
+            <div class="testi-role">Ecom Brand Owner · UK</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card anim anim-d1">
+        <div class="testi-result">CPL -58%</div>
+        <p class="testi-quote">Our real estate leads in Dubai were costing us AED 400+ each. KONVRT restructured our Google and Meta campaigns and <strong>got us to AED 170 per qualified lead</strong> in 6 weeks. The quality also improved dramatically.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">KM</div>
+          <div>
+            <div class="testi-name">Khalid M.</div>
+            <div class="testi-role">Real Estate Developer · UAE</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card anim">
+        <div class="testi-result">3× Revenue</div>
+        <p class="testi-quote">We launched TikTok ads with KONVRT having zero presence on the platform. They built our creative strategy from scratch. <strong>Within 90 days, TikTok was our #1 revenue channel</strong> at a lower CPA than Meta.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">JR</div>
+          <div>
+            <div class="testi-name">Jamie R.</div>
+            <div class="testi-role">DTC Beauty Brand · USA</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card anim anim-d1">
+        <div class="testi-result">12× ROAS</div>
+        <p class="testi-quote">I was skeptical about another agency. But KONVRT's free audit identified $8,000/month in wasted Google spend immediately. <strong>We paused bad campaigns, reinvested, and hit 12× ROAS</strong> the following month.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">DP</div>
+          <div>
+            <div class="testi-name">David P.</div>
+            <div class="testi-role">Home Services · Canada</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>READY TO STOP<br>WASTING AD SPEND?</h2>
+  <p>Get a free, no-obligation audit of your current campaigns. We'll tell you exactly what's broken and how to fix it — in 48 hours.</p>
+  <a href="#contact" class="btn-dark">Claim Free Audit <span>→</span></a>
+</div>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="section-eyebrow anim">Get Started</div>
+  <h2 class="anim anim-d1">LET'S TALK<br>RESULTS</h2>
+  <div class="contact-grid">
+    <div class="contact-info anim">
+      <h3>What happens next?</h3>
+      <p>Fill in the form and we'll get back to you within 24 hours. First call is a no-pitch strategy session — we learn your business, you learn our approach. Then we send your free audit.</p>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📧</div>
+        <div>
+          <div class="contact-detail-text">Email us at</div>
+          <div class="contact-detail-val">hello@konvrt.agency</div>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">💬</div>
+        <div>
+          <div class="contact-detail-text">WhatsApp (UAE & Global)</div>
+          <div class="contact-detail-val">+971 XX XXX XXXX</div>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">⏱</div>
+        <div>
+          <div class="contact-detail-text">Response time</div>
+          <div class="contact-detail-val">Within 24 hours guaranteed</div>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">🌍</div>
+        <div>
+          <div class="contact-detail-text">Markets we serve</div>
+          <div class="contact-detail-val">UAE · USA · UK · Canada</div>
+        </div>
+      </div>
+    </div>
+    <div class="anim anim-d1">
+      <div class="form-group">
+        <label class="form-label">Your Name</label>
+        <input type="text" class="form-input" placeholder="John Smith">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="john@company.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Your Market</label>
+        <select class="form-select form-input">
+          <option value="">Select your market...</option>
+          <option>UAE</option>
+          <option>USA</option>
+          <option>UK</option>
+          <option>Canada</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Monthly Ad Budget</label>
+        <select class="form-select form-input">
+          <option value="">Select your budget...</option>
+          <option>Under $2,000/month</option>
+          <option>$2,000 – $5,000/month</option>
+          <option>$5,000 – $15,000/month</option>
+          <option>$15,000 – $50,000/month</option>
+          <option>$50,000+/month</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">What do you need help with?</label>
+        <textarea class="form-textarea" placeholder="Tell us about your business and current challenges..."></textarea>
+      </div>
+      <button class="btn-primary" style="width:100%;justify-content:center" onclick="submitForm()">
+        Request Free Audit <span class="arrow">→</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">KON<span>V</span>RT</div>
+      <p class="footer-tagline">Performance marketing for brands that are done guessing and ready to scale. UAE · USA · UK · Canada.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#">Lead Generation Ads</a></li>
+        <li><a href="#">Ecommerce Ads</a></li>
+        <li><a href="#">TikTok Ads</a></li>
+        <li><a href="#">Google Ads</a></li>
+        <li><a href="#">Full Funnel Strategy</a></li>
+        <li><a href="#">Tracking Setup</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Markets</div>
+      <ul class="footer-links">
+        <li><a href="#">UAE</a></li>
+        <li><a href="#">USA</a></li>
+        <li><a href="#">UK</a></li>
+        <li><a href="#">Canada</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="#">About</a></li>
+        <li><a href="#">Case Studies</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Free Audit</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2025 KONVRT Agency. All rights reserved.</div>
+    <div style="display:flex;gap:24px">
+      <a href="#" style="color:var(--muted);text-decoration:none;font-size:13px">Privacy Policy</a>
+      <a href="#" style="color:var(--muted);text-decoration:none;font-size:13px">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// CURSOR
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+});
+
+function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+document.querySelectorAll('a, button, .service-card, .platform-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(2.5)';
+    ring.style.transform = 'translate(-50%,-50%) scale(1.5)';
+    ring.style.borderColor = 'rgba(200,240,0,0.6)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+    ring.style.transform = 'translate(-50%,-50%) scale(1)';
+    ring.style.borderColor = 'rgba(200,240,0,0.4)';
+  });
+});
+
+// SCROLL ANIMATIONS
+const animEls = document.querySelectorAll('.anim');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.1 });
+animEls.forEach(el => obs.observe(el));
+
+// FORM SUBMIT
+function submitForm() {
+  const btn = event.target.closest('button');
+  btn.textContent = '✓ Request Received — We\'ll be in touch within 24 hours!';
+  btn.style.background = 'var(--white)';
+  btn.style.cursor = 'default';
+}
+
+// NAV active
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  nav.style.borderBottomColor = window.scrollY > 100 ? 'var(--lime)' : 'var(--border)';
+});
+</script>
+</body>
+</html>
